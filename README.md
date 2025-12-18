@@ -1,2 +1,4 @@
-# Samoa Traffic Switch Impact Analysis  
-## Overview  This repository contains code and analysis for evaluating the impact of Samoa's 2009 traffic direction switch on road traffic mortality using the Synthetic Control Method (SCM). On September 7, 2009, Samoa switched from right-hand to left-hand traffic, making it one of the few countries in modern history to make such a change. This analysis estimates the causal effect of this policy on road fatalities. just did how do I update it through terminal
+# Samoa Traffic Switch Impact Analysis
+
+## Overview 
+This repository contains code and analysis for evaluating the impact of Samoa's 2009 traffic direction switch on road traffic mortality using the Synthetic Control Method (SCM). On September 7, 2009, Samoa switched from right-hand to left-hand traffic, making it one of the few countries in modern history to make such a change. This analysis estimates the causal effect of this policy on road fatalities. just did how do I update it through terminal
