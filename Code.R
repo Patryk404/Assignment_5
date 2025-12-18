@@ -1,13 +1,10 @@
-# code block for your analysis
-# if code doesn't run on forum, paste your code AND your results here
-
 # Data preparation, as for some reason my excel data is not in right format
 df <- df %>%
   mutate(
     country = as.character(country),
     year = as.integer(year),
     fatalities = as.numeric(fatalities),
-    gdp_pc = as.numeric(gdp_pc),
+    gdp_pp = as.numeric(gdp_pp),
     alcohol = as.numeric(alcohol),
     pop_density = as.numeric(pop_density)
   )
@@ -92,4 +89,22 @@ results_df <- data.frame(
 
 print("\nYear-by-Year Results:")
 print(results_df)
+
+
+# Split into pre and post periods
+pre_treatment_gap <- treatment_effect[1:9]   # 2000-2008
+post_treatment_gap <- treatment_effect[10:17] # 2009-2016
+
+# Calculate Cohen's d
+mean_post_effect <- mean(post_treatment_gap)
+sd_pre_treatment <- sd(pre_treatment_gap)
+cohens_d <- mean_post_effect / sd_pre_treatment
+
+print(paste("Cohen's d:", round(cohens_d, 3)))
+
+# Interpretation
+cat("\nInterpretation (Cohen's guidelines):\n")
+cat("Small effect: |d| = 0.2\n")
+cat("Medium effect: |d| = 0.5\n")
+cat("Large effect: |d| = 0.8\n")
 

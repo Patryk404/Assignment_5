@@ -1,5 +1,4 @@
-# code block for your analysis
-# if code doesn't run on forum, paste your code AND your results here
+#Using the main code, but changing the treatment unit from Samoa (ID=1) to Fiji (ID=4)
 
 # Data preparation, as for some reason my excel data is not in right format
 df <- df %>%
@@ -7,7 +6,7 @@ df <- df %>%
     country = as.character(country),
     year = as.integer(year),
     fatalities = as.numeric(fatalities),
-    gdp_pc = as.numeric(gdp_pc),
+    gdp_pp = as.numeric(gdp_pp),
     alcohol = as.numeric(alcohol),
     pop_density = as.numeric(pop_density)
   )
@@ -23,8 +22,8 @@ dataprep_out <- dataprep(
   unit.variable = "country_id",
   unit.names.variable = "country",
   time.variable = "year",
-  treatment.identifier = 1,
-  controls.identifier = setdiff(unique(df$country_id), 1),
+  treatment.identifier = 4,
+  controls.identifier = setdiff(unique(df$country_id), 4),
   time.optimize.ssr = 2000:2008,
   time.plot = 2000:2016
 )
@@ -54,9 +53,9 @@ path.plot(
   dataprep.res = dataprep_out,
   Ylab = "Fatalities",
   Xlab = "Year",
-  Legend = c("Samoa", "Synthetic Samoa"),
+  Legend = c("Fiji", "Synthetic Fiji"),
   Legend.position = "bottomleft",
-  Main = "Samoa vs Synthetic Control"
+  Main = "Fiji vs Synthetic Control"
 )
 abline(v = 2009, lty = 2, col = "red")
 
@@ -66,7 +65,7 @@ gaps.plot(
   dataprep.res = dataprep_out,
   Ylab = "Gap in Fatalities",
   Xlab = "Year",
-  Main = "Gap between Samoa and Synthetic Control"
+  Main = "Gap between Fiji and Synthetic Control"
 )
 abline(v = 2009, lty = 2, col = "red")
 abline(h = 0, lty = 2, col = "gray")
@@ -93,3 +92,19 @@ results_df <- data.frame(
 print("\nYear-by-Year Results:")
 print(results_df)
 
+# Split into pre and post periods
+pre_treatment_gap <- treatment_effect[1:9]   # 2000-2008
+post_treatment_gap <- treatment_effect[10:17] # 2009-2016
+
+# Calculate Cohen's d
+mean_post_effect <- mean(post_treatment_gap)
+sd_pre_treatment <- sd(pre_treatment_gap)
+cohens_d <- mean_post_effect / sd_pre_treatment
+
+print(paste("Cohen's d:", round(cohens_d, 3)))
+
+# Interpretation
+cat("\nInterpretation (Cohen's guidelines):\n")
+cat("Small effect: |d| = 0.2\n")
+cat("Medium effect: |d| = 0.5\n")
+cat("Large effect: |d| = 0.8\n")
